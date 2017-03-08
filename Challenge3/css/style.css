@@ -1,0 +1,67 @@
+body
+{
+font-family:arial
+}
+#container
+{
+margin:0 auto;
+width:600px;
+}
+.messageBody
+{
+min-height:70px;
+margin-bottom:10px;
+border: solid 1px #000;
+}
+.stimg
+{
+float:left;
+
+}
+.messageIcon
+{
+  width: 30px;
+}
+.sttext
+{
+margin-left:70px;
+font-size:12px;
+line-height:18px;
+min-height:50px;
+word-wrap:break-word;
+overflow:hidden;
+padding:5px;
+display:block;
+
+}
+.sttext strong{display:block}
+.sttime
+{
+font-size:11px;
+color:#999;
+font-family:Arial, Helvetica, sans-serif;
+}
+.deleteMessage
+{
+    color: #dedede;
+    float: right;
+    cursor: pointer;
+    position: relative;
+    top: -21px;
+}
+.deleteMessage:hover
+{
+color:#333333;
+}
+.stupdatebox
+{
+width:560px;
+padding:10px;
+
+}
+.messageButton
+{
+margin-bottom:20px;
+}
+
+#mainContent{width:600px;float:left}

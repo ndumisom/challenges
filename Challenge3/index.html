@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Messages</title>
+<link href='css/style.css' rel='stylesheet' type='text/css'/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="js/ajaxGetPost.js"></script>
+<script>
+
+
+$(document).ready(function()
+{
+var base_url="http://localhost/inventCommerce/Challenge3/";
+var url,encodedata;
+$("#text_message").focus();
+
+/* Load messages */
+url=base_url+'api/messages';
+encodedata='';
+ajax_data('GET',url, function(data) 
+{
+$.each(data.messages, function(i,data)
+{
+var html="<div class='messageBody' id='messageBody"+data.message_id+"'><div class='stimg'><img src='img/Messaging-Message-icon.png' class='messageIcon'/></div>"
+         +"<div class='sttext'><strong>"+data.messages_title+"</strong>"+data.text_message+"<span id='"+data.message_id+"' class='deleteMessage'><img src='img/delete_img.png' class='messageIcon'/></span>";
+		 +"</div></div>";
+$(html).appendTo("#mainContent");
+});
+
+});
+
+/* Insert message */
+$('body').on("click",'.messageButton',function()
+{
+var text_message=$('#text_message').val();
+
+encode=JSON.stringify({
+        "text_message": text_message,
+        "messages_title": $('#messages_title').val()
+        });
+url=base_url+'api/messages';
+if(text_message.length>0)
+{
+post_ajax_data(url,encode, function(data) 
+{
+
+	console.log(url);
+	console.log(encode);
+	console.log(data);
+$.each(data.messages, function(i,data)
+{
+var html="<div class='messageBody' id='messageBody"+data.message_id+"'><div class='stimg'><img src='img/Messaging-Message-icon.png' class='messageIcon'/></div>"
+         +"<div class='sttext'><strong>"+data.messages_title+"</strong>"+data.text_message+"<span id='"+data.message_id+"' class='deleteMessage'><img src='img/delete_img.png' class='messageIcon'/></span>";
+		 +"</div></div>";
+$("#mainContent").prepend(html);
+
+$('#messages_title').val('').focus();
+
+$('#text_message').val('').focus();
+
+});
+});
+}
+
+});
+
+/* Delete Updates */
+$('body').on("click",'.deleteMessage',function()
+{
+var ID=$(this).attr("id");
+url=base_url+'api/messages/delete/'+ID;
+ajax_data('DELETE',url, function(data) 
+{
+$("#messageBody"+ID).fadeOut("slow");
+});
+});
+
+
+
+
+
+});
+</script>
+
+</head>
+
+<body>
+<div style="margin:0 auto;width:1000px;">
+<h1>Messages</h1>
+
+<div>
+
+<label>Message title</label><br/><br/>
+<input type="text" id="messages_title" class="" value=""><br/><br/>
+
+<label>Message body</label><br/><br/>
+
+<textarea id="text_message" class=""></textarea><br/><br/>
+<input type="submit" value="Send Message" class="messageButton">
+</div>
+
+
+<div id="mainContent">
+
+</div>
+
+<div style="width:380px;float:right">
+
+</div>
+
+</div>
+
+
+</body>
+</html>
